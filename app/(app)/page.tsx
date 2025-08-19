@@ -21,11 +21,6 @@ export default function Home() {
 
   //redux state
   const dispatch = useDispatch();
-  const cleanedImage = useSelector(
-    (state: RootState) => state.app.cleanedImage
-  );
-
-  const aiData = useSelector((state: RootState) => state.app.aiData);
   // local useState()
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState('');
