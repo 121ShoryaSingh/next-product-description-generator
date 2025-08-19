@@ -4,8 +4,8 @@ import { removeBackground } from '@imgly/background-removal';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../store/store';
-import { setCleanedImage, setAiData } from '../store/appSlice';
+import type { RootState } from '../../redux/store';
+import { setCleanedImage, setAiData } from '../../redux/features/app/appSlice';
 
 interface ProductData {
   details: string;
