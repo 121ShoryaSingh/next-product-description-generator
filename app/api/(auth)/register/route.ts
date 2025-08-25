@@ -6,16 +6,33 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const { name, email, password } = await req.json();
+    if (!name || !email || !password) {
+      return NextResponse.json(
+        {
+          message: 'All fields are required',
+        },
+        { status: 400 }
+      );
+    }
+    console.log(name, email, password);
     await dbConnect();
 
     //Checking for existing user
     const existing = await User.findOne({ email });
     if (existing) {
-      return NextResponse.json({ message: 'User exists' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'User already exists' },
+        { status: 400 }
+      );
     }
     //Encrypting password for security342wsdxc 6
-    const hashedPassword = await bcrypt.hash(password, 24);
-    User.create({ name, email, password: hashedPassword });
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const res = await User.create({
+      name: name,
+      email: email,
+      password: hashedPassword,
+    });
+    console.log(res);
     return NextResponse.json(
       { message: 'User is registered' },
       { status: 200 }

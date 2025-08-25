@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    //Awaiting DB Connection
+    // //Awaiting DB Connection
     await dbConnect();
     //Taking token and getting id
     const token = req.cookies.get('token')?.value;
@@ -44,6 +44,7 @@ export async function POST(req: NextRequest) {
       displayName: 'upload-image',
       mimeType: file.type,
     });
+    console.log(uploadResult);
 
     const contents = [
       {
@@ -124,7 +125,7 @@ export async function POST(req: NextRequest) {
     });
     parsedOutput = JSON.parse(text);
 
-    // Storing the image and product detail to backend
+    // // Storing the image and product detail to backend
     const newProduct = await Product.create({
       userId: decode.id,
       name: parsedOutput.title,
@@ -141,7 +142,7 @@ export async function POST(req: NextRequest) {
 
     // returing data
     return NextResponse.json(
-      { message: 'Product generated & saved' },
+      { message: 'Product generated & saved', newProduct },
       { status: 201 }
     );
   } catch (error) {
