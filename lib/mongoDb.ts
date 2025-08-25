@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGO_DB_URI!;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
   throw new Error('Please define MONGODB_URI');
@@ -28,6 +28,13 @@ export async function dbConnect(): Promise<typeof mongoose> {
     cached.promise = mongoose.connect(MONGODB_URI);
   }
 
-  cached.connection = await cached.promise;
-  return cached.connection;
+  try {
+    cached.connection = await cached.promise;
+    console.log('Database connected Successfully');
+    return cached.connection;
+  } catch (error) {
+    console.error('Database connection failed', error);
+    cached.promise = null;
+    throw error;
+  }
 }
