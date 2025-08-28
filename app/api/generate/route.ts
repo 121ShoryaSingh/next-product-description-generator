@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     // Extracting form data.
     const formData = await req.formData();
-    const product = JSON.parse(formData.get('product') as string);
+    const product = formData.get('product' as string);
     const file = formData.get('image') as File;
     if (!file) {
       return NextResponse.json({ error: 'Missing image' }, { status: 400 });
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     }
 
     const ai = new GoogleGenerativeAI(apiKey!);
-    const model = ai.getGenerativeModel({ model: 'gemini-2.5-pro' });
+    const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     const fileManager = new GoogleAIFileManager(apiKey!);
     const uploadResult = await fileManager.uploadFile(blob, {
@@ -134,6 +134,7 @@ export async function POST(req: NextRequest) {
       baseDetails: product,
       processedImage: r2Url,
       captions: parsedOutput.captions,
+      hashtags: parsedOutput.hashtags,
     });
 
     await User.findByIdAndUpdate(decode.id, {
