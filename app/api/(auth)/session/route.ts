@@ -10,10 +10,21 @@ export async function GET(req: NextRequest) {
   }
   try {
     const decode = verifyToken(token);
-    await dbConnect();
-    const session = await User.findOne(decode.email);
 
-    return NextResponse.json(session);
+    await dbConnect();
+    const session = await User.findOne({ email: decode.email });
+    if (session?.email === decode.email) {
+      return NextResponse.json(
+        {
+          user: {
+            id: session?._id.toString(),
+            name: session?.name,
+            email: session?.email,
+          },
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     return NextResponse.json({ message: 'Invalid token' }, { status: 400 });
   }
