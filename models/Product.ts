@@ -8,6 +8,7 @@ export interface Product extends Document {
   baseDetails: string;
   processedImage: string[];
   captions: string[];
+  hashtags: string[];
   createdAt: Date;
   upDatedAt: Date;
 }
@@ -21,6 +22,7 @@ const ProductSchema: Schema = new Schema(
     baseDetails: { type: String, required: true },
     processedImages: [{ type: String }],
     captions: [{ type: String }],
+    hashtags: [{ type: String }],
   },
   { timestamps: true }
 );
