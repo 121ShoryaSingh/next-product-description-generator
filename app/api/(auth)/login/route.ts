@@ -11,10 +11,7 @@ export async function POST(req: NextRequest) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return NextResponse.json(
-        { message: 'Wrong Email or Password' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Wrong Email' }, { status: 401 });
     }
     const checkPassword = bcrypt.compare(password, user.password);
     if (!checkPassword) {
@@ -31,6 +28,7 @@ export async function POST(req: NextRequest) {
       sameSite: 'strict',
       maxAge: 60 * 60 * 24 * 7,
     });
+    return response;
   } catch (error) {
     console.error('Error verfying user', error);
     return NextResponse.json(

@@ -20,15 +20,19 @@ export async function uploadToR2({
 }): Promise<string> {
   const bucketName = process.env.R2_BUCKET_NAME!;
 
-  //Uploading file
-  await r2.send(
-    new PutObjectCommand({
-      Bucket: bucketName,
-      Key: key,
-      Body: body,
-      ContentType: contentType,
-    })
-  );
+  try {
+    //Uploading file
+    await r2.send(
+      new PutObjectCommand({
+        Bucket: bucketName,
+        Key: key,
+        Body: body,
+        ContentType: contentType,
+      })
+    );
 
-  return `${process.env.R2_PUBLIC_URL}/${key}`;
+    return `${process.env.R2_PUBLIC_URL}/${key}`;
+  } catch (error) {
+    return 'Error Uploading file to R2';
+  }
 }

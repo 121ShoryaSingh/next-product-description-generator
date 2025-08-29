@@ -123,6 +123,7 @@ export async function POST(req: NextRequest) {
       key: decode.id,
       contentType: file.type,
     });
+    console.log(r2Url);
     parsedOutput = JSON.parse(text);
 
     // // Storing the image and product detail to backend
@@ -132,7 +133,7 @@ export async function POST(req: NextRequest) {
       description: parsedOutput.description,
       price: parsedOutput.price || 0,
       baseDetails: product,
-      processedImage: r2Url,
+      processedImages: [r2Url],
       captions: parsedOutput.captions,
       hashtags: parsedOutput.hashtags,
     });
