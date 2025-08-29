@@ -2,12 +2,17 @@
 
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
+import { toast } from 'sonner';
 
 export default function Preview() {
   const cleanedImage = useSelector(
     (state: RootState) => state.app.cleanedImage
   );
   const aiData = useSelector((state: RootState) => state.app.aiData);
+  console.log('aiData:', aiData);
+  if (!aiData) {
+    toast.error('Something is worng');
+  }
 
   return (
     <div>
@@ -21,10 +26,18 @@ export default function Preview() {
         )}
         {aiData && (
           <div className="flex flex-col gap-2">
-            <p>{aiData.title}</p>
-            <p>{aiData.description}</p>
-            <p>{aiData.captions}</p>
-            <p>{aiData.hashtags}</p>
+            <p>{aiData.newProduct.name}</p>
+            <p>{aiData.newProduct.description}</p>
+            <div>
+              {aiData.newProduct.captions.map((caption: string) => {
+                return <p key={caption}>{caption}</p>;
+              })}
+            </div>
+            <p className="flex flex-wrap gap-2">
+              {aiData.newProduct.hashtags.map((hashtag: string) => {
+                return <span key={hashtag}>{`#${hashtag}`}</span>;
+              })}
+            </p>
           </div>
         )}
       </h1>
