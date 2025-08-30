@@ -8,6 +8,7 @@ interface User {
 
 interface Session {
   user: User;
+  expires: string;
 }
 
 interface SessionState {
@@ -28,11 +29,10 @@ export const fetchSession = createAsyncThunk(
   'session/fetchSession',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('api/auth/session');
-      if (response.status === 200) {
-        const sessionData = await response.data;
-        return sessionData;
-      }
+      const response = await axios.get('api/session', {
+        withCredentials: true,
+      });
+      return response.data;
     } catch (error) {
       return rejectWithValue('Failed to fetch session');
     }
