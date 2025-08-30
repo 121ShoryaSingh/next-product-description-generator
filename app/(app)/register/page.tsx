@@ -29,6 +29,7 @@ export default function Register() {
       setErrorStatus(0);
       setError('');
       const response = await axios.post('/api/register', user);
+      router.push('/login');
     } catch (error: any) {
       if (error.response?.status === 400) {
         setErrorStatus(400);

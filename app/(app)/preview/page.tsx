@@ -1,10 +1,14 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { RootState } from '@/redux/store';
+import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
 export default function Preview() {
+  const router = useRouter();
+
   const cleanedImage = useSelector(
     (state: RootState) => state.app.cleanedImage
   );
@@ -35,12 +39,19 @@ export default function Preview() {
             </div>
             <p className="flex flex-wrap gap-2">
               {aiData.newProduct.hashtags.map((hashtag: string) => {
-                return <span key={hashtag}>{`#${hashtag}`}</span>;
+                return <span key={hashtag}>{`${hashtag}`}</span>;
               })}
             </p>
           </div>
         )}
       </h1>
+      <Button
+        onClick={() => {
+          router.push('/upload');
+        }}
+      >
+        Add Product
+      </Button>
     </div>
   );
 }
