@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
             name: session?.name,
             email: session?.email,
           },
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
         },
         { status: 200 }
       );
