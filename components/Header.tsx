@@ -2,11 +2,12 @@
 import { useSession } from '@/hooks/useSession';
 import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function Header() {
   const router = useRouter();
   const session = useSession();
-  console.log(session.status);
+
   const handleLogOut = () => {
     session.signOut();
   };

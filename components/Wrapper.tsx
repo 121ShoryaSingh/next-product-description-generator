@@ -6,8 +6,8 @@ export function Wrapper({
   className?: string;
 }) {
   return (
-    <section className={`w-full md:px-16 px-8 ${className}`}>
-      <div>{children}</div>
+    <section className={`max-w-screen-xl md:px-16 px-8 mx-auto ${className}`}>
+      <div className="">{children}</div>
     </section>
   );
 }
