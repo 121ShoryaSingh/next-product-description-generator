@@ -7,13 +7,13 @@ export const store = configureStore({
     app: appSlice,
     session: sessionSlice,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredPaths: ['app.aiData'],
-        ignoredActions: ['app/setAiData'],
-      },
-    }),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: {
+  //       ignoredPaths: ['app.aiData'],
+  //       ignoredActions: ['app/setAiData'],
+  //     },
+  //   }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
