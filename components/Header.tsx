@@ -90,7 +90,7 @@ export function Header() {
           </div>
         </div>
         {isMobileMenuOpen && (
-          <div className="md:hidden h-screen border-t bg-gray-50">
+          <nav className="md:hidden h-screen border-t bg-gray-50">
             <div className="px-2 py-3 space-y-1">
               {data.map((item) => {
                 const Icon = item.icon;
@@ -111,7 +111,7 @@ export function Header() {
                 );
               })}
             </div>
-          </div>
+          </nav>
         )}
       </div>
     </header>
