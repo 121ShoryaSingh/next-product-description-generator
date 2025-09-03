@@ -9,7 +9,7 @@ export function Wrapper({
     <section
       className={`max-w-7xl flex justify-between px-4 sm:px-6 lg:px-8 mx-auto ${className}`}
     >
-      <div className="">{children}</div>
+      {children}
     </section>
   );
 }
