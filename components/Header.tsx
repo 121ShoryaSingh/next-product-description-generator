@@ -6,7 +6,6 @@ import { LayoutDashboard, Menu, Package, Upload } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { fa } from 'zod/locales';
 
 const data = [
   { index: 1, href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -27,8 +26,8 @@ export function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
   return (
-    <header className="relative bg-white border-b shadow-sm">
-      <div className="z-30 fixed w-full">
+    <header className="relative">
+      <div className="z-30 fixed w-full bg-white shadow-sm border-b">
         {/* Wrapper */}
         <div className="max-w-7xl h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 mx-auto">
           {/* Logo */}
@@ -63,24 +62,26 @@ export function Header() {
 
           {/* buttons */}
           <div className="flex items-center space-x-4">
-            {session.status === 'authenticated' ? (
-              <>
-                <span className="text-sm text-gray-700">
-                  Welcome, {session.data?.user.name}
-                </span>
-                <Button onClick={handleLogOut}>Logout</Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  onClick={() => {
-                    router.push('/login');
-                  }}
-                >
-                  Login
-                </Button>
-              </>
-            )}
+            <div className="hidden sm:flex">
+              {session.status === 'authenticated' ? (
+                <>
+                  <span className="flex text-sm text-gray-700">
+                    Welcome, {session.data?.user.name}
+                  </span>
+                  <Button onClick={handleLogOut}>Logout</Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => {
+                      router.push('/login');
+                    }}
+                  >
+                    Login
+                  </Button>
+                </>
+              )}
+            </div>
             <button
               className="md:hidden p-2"
               onClick={handleMobileMenu}
@@ -110,6 +111,23 @@ export function Header() {
                   </Link>
                 );
               })}
+            </div>
+            <div className="flex sm:hidden flex-col px-2 py-3">
+              {session.status === 'authenticated' ? (
+                <>
+                  <Button onClick={handleLogOut}>Logout</Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => {
+                      router.push('/login');
+                    }}
+                  >
+                    Login
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         )}
