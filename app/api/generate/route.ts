@@ -1,4 +1,5 @@
 import { verifyToken } from '@/lib/auth';
+import { generateFileName } from '@/lib/generateFileName';
 import { dbConnect } from '@/lib/mongoDb';
 import { uploadToR2 } from '@/lib/r2';
 import Product from '@/models/Product';
@@ -120,7 +121,7 @@ export async function POST(req: NextRequest) {
     // Storing the image in to R2 storage
     const r2Url = await uploadToR2({
       body: blob,
-      key: decode.id,
+      key: generateFileName(decode.id),
       contentType: file.type,
     });
     console.log(r2Url);
