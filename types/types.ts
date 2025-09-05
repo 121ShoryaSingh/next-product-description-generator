@@ -5,7 +5,7 @@ export interface product {
   price: number;
   processedImages: string[];
   caption: string[];
-  hashtages: string[];
+  hashtags: string[];
   createdAt: Date;
   updatedAt: Date;
 }
