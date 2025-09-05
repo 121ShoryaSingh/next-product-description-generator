@@ -62,7 +62,7 @@ export function Header() {
 
           {/* buttons */}
           <div className="flex items-center space-x-4">
-            <div className="hidden sm:flex">
+            <div className="hidden md:flex items-center space-x-4">
               {session.status === 'authenticated' ? (
                 <>
                   <span className="flex text-sm text-gray-700">
@@ -92,29 +92,29 @@ export function Header() {
         </div>
         {isMobileMenuOpen && (
           <nav className="md:hidden h-screen border-t bg-gray-50">
-            <div className="px-2 py-3 space-y-1">
-              {data.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.index}
-                    href={item.href}
-                    className={cn(
-                      'flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium',
-                      pathname === item.href
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                    )}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
-            <div className="flex sm:hidden flex-col px-2 py-3">
+            <div className="flex md:hidden flex-col px-2 py-3">
               {session.status === 'authenticated' ? (
                 <>
+                  <div className="px-2 py-3 space-y-1">
+                    {data.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.index}
+                          href={item.href}
+                          className={cn(
+                            'flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium',
+                            pathname === item.href
+                              ? 'bg-blue-100 text-blue-700'
+                              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                          )}
+                        >
+                          <Icon className="h-4 w-4" />
+                          {item.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
                   <Button onClick={handleLogOut}>Logout</Button>
                 </>
               ) : (
