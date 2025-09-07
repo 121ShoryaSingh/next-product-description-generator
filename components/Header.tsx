@@ -62,7 +62,7 @@ export function Header() {
 
           {/* buttons */}
           <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center justify-end space-x-4">
               {session.status === 'authenticated' ? (
                 <>
                   <span className="flex text-sm text-gray-700">
