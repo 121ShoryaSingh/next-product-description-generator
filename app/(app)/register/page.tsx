@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { signUpSchema } from '@/schema/signUpSchema';
 import axios from 'axios';
+import { Package } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -47,21 +48,25 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-blue-400">
-      <div className="max-w-lg mx-auto py-8">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50">
+      <div className="max-w-lg mx-auto pt-32">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col bg-white gap-4 px-8 rounded-2xl py-8"
         >
-          <h1 className="text-2xl font-bold">Register</h1>
+          <div className="flex flex-col items-center justify-center">
+            <Package className="w-12 h-12 text-blue-500 mb-8" />
+            <h1 className="text-3xl font-bold">Create Account</h1>
+            <p className="text-gray-500 ">Sign up to your ProductAI account</p>
+          </div>
           <div className="flex flex-col gap-5 text-black">
             <div className="flex flex-col gap-3">
-              <label htmlFor="name">Fullname</label>
+              <label htmlFor="name">Full name</label>
               <Input
                 id="name"
                 className="bg-gray-200 placeholder:text-black"
                 type="text"
-                placeholder="Fullname"
+                placeholder="Full name"
                 value={user.name}
                 onChange={handleInputChange('name')}
                 disabled={isLoading}
