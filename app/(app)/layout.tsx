@@ -1,6 +1,5 @@
 'use client';
 
-import { Toaster } from 'sonner';
 import ReduxProvider from '../../redux/reduxProvider';
 import { Header } from '@/components/Header';
 
@@ -11,7 +10,6 @@ export default function appLayout({ children }: { children: React.ReactNode }) {
         <Header />
         {children}
       </ReduxProvider>
-      <Toaster />
     </div>
   );
 }
