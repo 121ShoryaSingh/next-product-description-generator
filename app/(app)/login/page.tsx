@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { setSession } from '@/redux/features/session/sessionSlice';
 import { useDispatch } from 'react-redux';
+import { Package } from 'lucide-react';
 
 export default function login() {
   const router = useRouter();
@@ -59,13 +60,24 @@ export default function login() {
   };
 
   return (
-    <div className="min-h-screen bg-blue-400">
-      <div className="max-w-lg mx-auto py-8">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50">
+      <div className="max-w-md mx-auto pt-32">
         <form
           className="bg-white flex flex-col gap-5 px-8 rounded-2xl py-8"
           onSubmit={handleSubmit}
         >
-          <h1 className="text-2xl font-bold">Login</h1>
+          <div className="flex flex-col items-center justify-center">
+            <Package className="w-12 h-12 text-blue-500 mb-8" />
+            <h1 className="text-3xl font-bold">Welcome Back</h1>
+            <p className="text-gray-500 ">Sign in to your ProductAI account</p>
+            <div className="border border-blue-600 bg-blue-100 p-3 text-center w-full rounded-lg">
+              <h4 className="text-blue-800 font-semibold">Demo Login:</h4>
+              <p className="text-blue-500 text-xs">
+                Use the given email and passowrd <br /> Email: demo@example2.com
+                , Pass: demo
+              </p>
+            </div>
+          </div>
           <div className="flex flex-col gap-5 text-black">
             <div className="flex flex-col gap-3">
               <label htmlFor="email">Email</label>
