@@ -7,7 +7,7 @@ import { Eye } from 'lucide-react';
 import { Badge } from './ui/badge';
 
 export function ProductCard({
-  id,
+  _id,
   name,
   description,
   price,
@@ -15,6 +15,7 @@ export function ProductCard({
   hashtags,
   processedImages,
 }: product) {
+  console.log(_id);
   return (
     <Card className="group hover:shadow-lg transition-shadow duration-200">
       <CardContent className="p-4">
@@ -57,7 +58,7 @@ export function ProductCard({
           })}
         </div>
         <Link
-          href=""
+          href={`/product/${_id}`}
           className="w-full"
         >
           <Button className="w-full flex items-center space-x-2">
