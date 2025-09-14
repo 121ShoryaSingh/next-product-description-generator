@@ -30,7 +30,7 @@ export const fetchSession = createAsyncThunk(
   'session/fetchSession',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('api/session', {
+      const response = await axios.get('/api/session', {
         withCredentials: true,
       });
       return response.data;
