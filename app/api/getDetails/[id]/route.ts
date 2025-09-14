@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     await dbConnect();
-    const { id } = params;
+    const { id } = await params;
 
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
