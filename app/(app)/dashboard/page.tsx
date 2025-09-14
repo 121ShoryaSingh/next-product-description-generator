@@ -20,9 +20,7 @@ export default async function dashboard() {
       },
     });
     productData = response.data.message;
-  } catch (error) {
-    toast.error('error fetching data');
-  }
+  } catch (error) {}
   return (
     <div className="pt-8">
       <Wrapper className="pt-16 flex-col">
