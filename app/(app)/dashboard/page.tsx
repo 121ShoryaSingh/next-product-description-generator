@@ -6,7 +6,6 @@ import { product } from '@/types/types';
 import axios from 'axios';
 import { Plus } from 'lucide-react';
 import { cookies } from 'next/headers';
-import { toast } from 'sonner';
 
 export default async function dashboard() {
   let productData: product[] = [];
