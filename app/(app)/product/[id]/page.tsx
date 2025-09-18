@@ -15,6 +15,7 @@ import {
   Calendar,
   DollarSign,
   MessageSquareIcon,
+  TagIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -80,7 +81,7 @@ export default async function ProductPage({
   }
 
   return (
-    <section className="pt-8">
+    <section className="py-8">
       <Wrapper className="pt-16 flex-col">
         <div className="mb-8">
           <Link href={'http://localhost:3000/dashboard'}>
@@ -172,6 +173,44 @@ export default async function ProductPage({
                       );
                     })}
                   </ul>
+                </CardContent>
+                <CardFooter>
+                  <div className="border-t-2 border-gray-100 pt-4 w-full">
+                    <CopyButton
+                      text={product.captions.toString()}
+                      title="Copy All Captions"
+                      className="w-full text-md"
+                    />
+                  </div>
+                </CardFooter>
+              </Card>
+            </div>
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <div className="flex items-center gap-2">
+                      <TagIcon className="h-6 w-6" />{' '}
+                      <span className="text-2xl font-semibold">Hashtags</span>
+                      <span className="px-2 py-1 bg-gray-100 rounded-lg">
+                        {product.hashtags.length}
+                      </span>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="flex flex-wrap gap-2">
+                    {product.hashtags.map((hashtags: string, index: number) => {
+                      return (
+                        <span
+                          key={index}
+                          className="text-blue-600 bg-gray-100 px-2 py-1 rounded-full"
+                        >
+                          <span className="text-sm">#{hashtags}</span>
+                        </span>
+                      );
+                    })}
+                  </p>
                 </CardContent>
                 <CardFooter>
                   <div className="border-t-2 border-gray-100 pt-4 w-full">
