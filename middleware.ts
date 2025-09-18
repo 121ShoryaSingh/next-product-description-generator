@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from './lib/auth';
+import axios from 'axios';
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value;
 
-  const protectedPaths = ['/dashboard, /preview'];
+  const protectedPaths = ['/dashboard', '/preview', '/product', '/upload'];
   const isProtectedPath = protectedPaths.some((path) =>
     req.nextUrl.pathname.startsWith(path)
   );
@@ -18,7 +19,13 @@ export function middleware(req: NextRequest) {
   }
 
   try {
-    verifyToken(token);
+    const response = await fetch(`${req.nextUrl.origin}/api/session`, {
+      method: 'GET',
+      headers: {
+        Cookie: req.headers.get('cookie') || '', // Forward cookies
+        'Content-Type': 'application/json',
+      },
+    });
     return NextResponse.next();
   } catch {
     const response = NextResponse.redirect(new URL('/login', req.url));
@@ -28,5 +35,10 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/preview/:path', '/dashboard/:path'],
+  matcher: [
+    '/preview/:path*',
+    '/dashboard/:path*',
+    '/product/:path*',
+    '/upload/:path*',
+  ],
 };
