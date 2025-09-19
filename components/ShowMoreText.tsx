@@ -10,7 +10,7 @@ interface ShowMoreTextProps {
   className?: string;
 }
 
-export default function ShowMore({
+export function ShowMore({
   text,
   maxLength = 150,
   showMoreText = 'Show More',

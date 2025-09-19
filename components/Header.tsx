@@ -27,7 +27,7 @@ export function Header() {
   };
   return (
     <header className="relative">
-      <div className="z-30 fixed w-full bg-white shadow-sm border-b">
+      <div className="z-50 fixed w-full bg-white shadow-sm border-b">
         {/* Wrapper */}
         <div className="max-w-7xl h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 mx-auto">
           {/* Logo */}
