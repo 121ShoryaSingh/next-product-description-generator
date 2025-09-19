@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Copy, CopyCheck } from 'lucide-react';
 
-export default function CopyButton({
+export function CopyButton({
   text,
   title,
   className,
