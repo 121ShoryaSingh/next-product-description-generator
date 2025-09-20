@@ -1,5 +1,5 @@
-import CopyButton from '@/components/CopyButton';
-import ShowMore from '@/components/ShowMoreText';
+import { CopyButton } from '@/components/CopyButton';
+import { ShowMore } from '@/components/ShowMoreText';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { UploadComponent } from '@/components/UplaodComponent';
 import { Wrapper } from '@/components/Wrapper';
 import axios from 'axios';
 import {
@@ -42,7 +43,6 @@ export default async function ProductPage({
   if (!extractedId || extractedId === 'undefined') {
     return <div className="pt-28">Invalid product ID extracted from slug</div>;
   }
-
   let product;
   try {
     const response = await axios(
@@ -59,7 +59,6 @@ export default async function ProductPage({
     console.error('API Error:', error);
     product = null;
   }
-  console.log(product);
 
   if (!product) {
     return (
@@ -81,18 +80,22 @@ export default async function ProductPage({
   }
 
   return (
-    <section className="py-8">
+    <div className="py-8 relative bg-gray-200">
       <Wrapper className="pt-16 flex-col">
-        <div className="mb-8">
-          <Link href={'http://localhost:3000/dashboard'}>
+        <div className="mb-8 flex flex-col sm:flex-row justify-between items-center w-full gap-3">
+          <Link
+            href={'http://localhost:3000/dashboard'}
+            className="w-full sm:w-fit"
+          >
             <Button
               variant="outline"
-              className=""
+              className="w-full sm:w-fit"
             >
               <ArrowLeft />
               Back to dashboard
             </Button>
           </Link>
+          <UploadComponent productId={id} />
         </div>
         {/* Product Image */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -226,6 +229,6 @@ export default async function ProductPage({
           </div>
         </div>
       </Wrapper>
-    </section>
+    </div>
   );
 }

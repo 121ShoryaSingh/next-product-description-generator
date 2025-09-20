@@ -21,7 +21,7 @@ export default async function dashboard() {
     productData = response.data.message;
   } catch (error) {}
   return (
-    <div className="pt-8">
+    <div className="pt-8 bg-gray-200">
       <Wrapper className="pt-16 flex-col">
         <div className="flex justify-between pb-7">
           <div className="sm:self-center self-start">
