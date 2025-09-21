@@ -83,7 +83,7 @@ export function Header() {
               )}
             </div>
             <button
-              className="md:hidden p-2"
+              className="md:hidden p-2 flex justify-end items-center"
               onClick={handleMobileMenu}
             >
               <Menu />

@@ -1,4 +1,5 @@
 import { CopyButton } from '@/components/CopyButton';
+import ImageCarousel from '@/components/ImageCarousel';
 import { ShowMore } from '@/components/ShowMoreText';
 import { Button } from '@/components/ui/button';
 import {
@@ -101,15 +102,7 @@ export default async function ProductPage({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card className="relative">
             <CardContent className="p-6 md:sticky top-16">
-              <div className="aspect-square relative overflow-hidden">
-                <Image
-                  src={product.processedImages[0]}
-                  alt={product.name}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 1280) 100vw, 50vw"
-                />
-              </div>
+              <ImageCarousel images={product.processedImages} />
             </CardContent>
           </Card>
           {/* Product Details */}

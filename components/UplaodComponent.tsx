@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-// import { Textarea } from '@/components/ui/textarea';
 import {
   Upload,
   Loader2,
@@ -22,6 +21,8 @@ import {
   Camera,
 } from 'lucide-react';
 import Image from 'next/image';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 interface UploadImageDialogProps {
   productId: string;
@@ -36,7 +37,6 @@ export function UploadComponent({
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-  const [processingInstructions, setProcessingInstructions] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,29 +93,51 @@ export function UploadComponent({
     setIsLoading(true);
 
     try {
-      // Simulate API call for image processing
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const formData = new FormData();
 
-      // Mock processed images (in real app, these would come from the API)
-      const mockProcessedImages = [
-        'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=800',
-        'https://images.pexels.com/photos/1649772/pexels-photo-1649772.jpeg?auto=compress&cs=tinysrgb&w=800',
-      ];
+      // Add each file to FormData
+      selectedFiles.forEach((file) => {
+        formData.append('images', file);
+      });
 
-      console.log('Processing images for product:', productId);
-      console.log('Files:', selectedFiles);
-      console.log('Instructions:', processingInstructions);
+      console.log('Uploading files:', selectedFiles);
+      console.log('Product ID:', productId);
 
-      // Call the callback with new images
-      onUploadComplete?.(mockProcessedImages);
+      const response = await axios.patch(
+        `/api/uploadImages/${productId}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
-      // Reset form
-      setSelectedFiles([]);
-      setPreviewUrls([]);
-      setProcessingInstructions('');
-      setIsOpen(false);
+      console.log('Upload successful:', response.data);
+
+      if (response.data.success) {
+        toast.success(
+          `Successfully uploaded ${response.data.addedImages.length} images!`
+        );
+
+        onUploadComplete?.(response.data.addedImages);
+
+        // Reset form
+        setSelectedFiles([]);
+        setPreviewUrls([]);
+        setIsOpen(false);
+      } else {
+        toast.error('Upload failed. Please try again.');
+      }
     } catch (error) {
       console.error('Error processing images:', error);
+
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.error || error.message;
+        toast.error(`Upload failed: ${errorMessage}`);
+      } else {
+        toast.error('Upload failed. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -126,7 +148,6 @@ export function UploadComponent({
     previewUrls.forEach((url: string) => URL.revokeObjectURL(url));
     setSelectedFiles([]);
     setPreviewUrls([]);
-    setProcessingInstructions('');
     setIsOpen(false);
   };
 
@@ -142,7 +163,7 @@ export function UploadComponent({
           <Sparkles className="h-3 w-3 ml-1 animate-pulse" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto ">
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-center pb-6">
           <DialogTitle className="flex items-center justify-center gap-3 text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             <div className="relative">
@@ -284,12 +305,12 @@ export function UploadComponent({
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  <span className="animate-pulse">Processing Magic...</span>
+                  <span className="animate-pulse">Uploading...</span>
                 </>
               ) : (
                 <>
-                  <Wand2 className="h-4 w-4 mr-2" />
-                  Process with AI
+                  <Upload className="h-4 w-4 mr-2" />
+                  Upload Images
                   <Sparkles className="h-3 w-3 ml-2 animate-pulse" />
                 </>
               )}
