@@ -76,8 +76,8 @@ export function UploadComponent({
   };
 
   const removeFile = (index: number) => {
-    const newFiles = selectedFiles.filter((_: any, i: number) => i !== index);
-    const newUrls = previewUrls.filter((_: any, i: number) => i !== index);
+    const newFiles = selectedFiles.filter((_, i: number) => i !== index);
+    const newUrls = previewUrls.filter((_, i: number) => i !== index);
 
     // Revoke the removed URL to prevent memory leaks
     URL.revokeObjectURL(previewUrls[index]);
@@ -173,8 +173,8 @@ export function UploadComponent({
             Add More Images
           </DialogTitle>
           <p className="text-gray-600 mt-2">
-            "Add multiple angles and details to help customers see your product
-            better"
+            &quot;Add multiple angles and details to help customers see your
+            product better&quot;
           </p>
         </DialogHeader>
 

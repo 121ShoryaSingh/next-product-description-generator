@@ -33,6 +33,6 @@ export async function uploadToR2({
 
     return `${process.env.R2_PUBLIC_URL}/${key}`;
   } catch (error) {
-    return 'Error Uploading file to R2';
+    return error as string;
   }
 }
