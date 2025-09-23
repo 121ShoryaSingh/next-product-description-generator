@@ -5,7 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Menu, Package, Upload } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const data = [
   { index: 1, href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -18,9 +19,16 @@ export function Header() {
   const pathname = usePathname();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userName, setUserName] = useState('');
 
-  const handleLogOut = () => {
+  useEffect(() => {
+    setUserName(session.data?.user.name || '');
+  }, [session?.data?.user]);
+
+  const handleLogOut = async () => {
+    await axios.get('/api/signout');
     session.signOut();
+    router.push('/login');
   };
   const handleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -66,7 +74,10 @@ export function Header() {
               {session.status === 'authenticated' ? (
                 <>
                   <span className="flex text-sm text-gray-700">
-                    Welcome, {session.data?.user.name}
+                    Welcome,{' '}
+                    {session.data?.user
+                      ? session.data?.user.name
+                      : 'Loading...'}
                   </span>
                   <Button onClick={handleLogOut}>Logout</Button>
                 </>
