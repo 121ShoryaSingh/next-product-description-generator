@@ -119,6 +119,9 @@ export default function login() {
           <Button
             type="submit"
             disabled={isLoading}
+            onClick={() => {
+              router.push('/dashboard');
+            }}
           >
             Login
           </Button>
