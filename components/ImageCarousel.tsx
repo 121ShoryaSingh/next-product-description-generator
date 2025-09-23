@@ -25,19 +25,14 @@ export default function ImageCarousel({ images }: { images: string[] }) {
             return (
               <CarouselItem key={index}>
                 <div className="relative aspect-square w-full group">
-                  <div className=" hidden absolute right-0 top-0 group-hover:block transition-all duration-500">
-                    <Button
+                  <div className=" opacity-0 absolute right-0 top-0 group-hover:opacity-100 transition-all duration-500">
+                    <a
+                      href={imageLink}
+                      download={'image.jpg'}
                       className="cursor-pointer"
-                      variant="outline"
                     >
-                      <Link
-                        href={imageLink}
-                        download={'image.jpg'}
-                        className="text-gray-600"
-                      >
-                        <DownloadIcon />
-                      </Link>
-                    </Button>
+                      <DownloadIcon />
+                    </a>
                   </div>
                   <Image
                     src={imageLink}
