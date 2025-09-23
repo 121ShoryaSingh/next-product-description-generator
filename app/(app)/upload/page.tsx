@@ -9,6 +9,17 @@ import {
   setAiData,
 } from '../../../redux/features/app/appSlice';
 import axios from 'axios';
+import { Wrapper } from '@/components/Wrapper';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ProductData {
   details: string;
@@ -86,41 +97,68 @@ export default function Upload() {
   };
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="mx-auto max-w-2xl p-6 space-y-6">
-        <h1 className="text-2xl font-semibold">
-          Step 1 · Upload & Clean Background
-        </h1>
-
-        <div className="rounded-xl bg-white p-5 shadow space-y-4">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={onFile}
-          />
-          {loading && <p className="text-sm text-gray-600">Processing…</p>}
-          {preview && (
-            <img
-              src={preview}
-              alt="preview"
-              className="w-full max-h-96 object-contain rounded border"
-            />
-          )}
+      <Wrapper className="pt-32 flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Card>
+            <div className="space-y-8">
+              <CardHeader>
+                <CardTitle>Upload & Clean Background</CardTitle>
+                <CardDescription>
+                  Upload high-quality image of your product
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="border-3 border-dashed border-blue-500  rounded-xl p-6">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={onFile}
+                  />
+                  {loading && (
+                    <p className="text-sm text-gray-600">Processing…</p>
+                  )}
+                  {preview && (
+                    <img
+                      src={preview}
+                      alt="preview"
+                      className="w-full max-h-96 object-contain rounded border"
+                    />
+                  )}
+                </div>
+              </CardContent>
+            </div>
+          </Card>
+          <Card>
+            <div className="space-y-8">
+              <CardHeader>
+                <CardTitle>Basic Details</CardTitle>
+                <CardDescription>
+                  Enter basic information related to your product
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Textarea
+                  className="w-full rounded border p-3 outline-none focus:ring-2 focus:ring-blue-500"
+                  rows={4}
+                  placeholder='e.g. "red cotton shirt, men’s, size M"'
+                  value={product.details}
+                  onChange={(e) =>
+                    setProduct({ ...product, details: e.target.value })
+                  }
+                />
+              </CardContent>
+              <CardFooter>
+                <Button
+                  onClick={handleSubmit}
+                  className="w-full"
+                >
+                  Next
+                </Button>
+              </CardFooter>
+            </div>
+          </Card>
         </div>
-
-        <div className="rounded-xl bg-white p-5 shadow space-y-2">
-          <label className="text-sm font-medium">Basic details</label>
-          <textarea
-            className="w-full rounded border p-3 outline-none focus:ring-2 focus:ring-blue-500"
-            rows={4}
-            placeholder='e.g. "red cotton shirt, men’s, size M"'
-            value={product.details}
-            onChange={(e) =>
-              setProduct({ ...product, details: e.target.value })
-            }
-          />
-          <Button onClick={handleSubmit}>Next</Button>
-        </div>
-      </div>
+      </Wrapper>
     </div>
   );
 }
