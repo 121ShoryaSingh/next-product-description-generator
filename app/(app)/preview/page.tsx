@@ -1,7 +1,18 @@
 'use client';
 
+import { ShowMore } from '@/components/ShowMoreText';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Wrapper } from '@/components/Wrapper';
 import { RootState } from '@/redux/store';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
@@ -19,39 +30,54 @@ export default function Preview() {
   }
 
   return (
-    <div>
-      <h1>
-        {cleanedImage && (
-          <img
-            src={cleanedImage}
-            alt="Cleaned product"
-            className=" w-[300px]"
-          />
-        )}
-        {aiData && (
-          <div className="flex flex-col gap-2">
-            <p>{aiData.newProduct.name}</p>
-            <p>{aiData.newProduct.description}</p>
-            <div>
-              {aiData.newProduct.captions.map((caption: string) => {
-                return <p key={caption}>{caption}</p>;
-              })}
-            </div>
-            <p className="flex flex-wrap gap-2">
-              {aiData.newProduct.hashtags.map((hashtag: string) => {
-                return <span key={hashtag}>{`${hashtag}`}</span>;
-              })}
-            </p>
-          </div>
-        )}
-      </h1>
-      <Button
-        onClick={() => {
-          router.push('/upload');
-        }}
-      >
-        Add Product
-      </Button>
+    <div className="min-h-screen pt-32">
+      <Wrapper>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Product Image</CardTitle>
+              <CardDescription>Original uploaded image</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="relative aspect-square rounded-lg">
+                <Image
+                  src={cleanedImage || ''}
+                  alt={aiData.newProduct.name}
+                  fill
+                />
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>{aiData.newProduct.name}</CardTitle>
+              <CardDescription>
+                <ShowMore text={aiData.newProduct.description} />
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CardTitle>Caption</CardTitle>
+              <ul>
+                {aiData.newProduct.captions.map(
+                  (caption: string, index: number) => {
+                    return <li key={index}>{caption}</li>;
+                  }
+                )}
+              </ul>
+            </CardContent>
+            <CardFooter>
+              <CardTitle>Hashtags</CardTitle>
+              <div>
+                {aiData.newProduct.hashtags.map(
+                  (hashtag: string, index: number) => {
+                    return <span key={index}>{hashtag}</span>;
+                  }
+                )}
+              </div>
+            </CardFooter>
+          </Card>
+        </div>
+      </Wrapper>
     </div>
   );
 }
