@@ -157,7 +157,7 @@ export function UploadComponent({
       onOpenChange={setIsOpen}
     >
       <DialogTrigger asChild>
-        <Button className="gap-2">
+        <Button className="gap-2 w-full sm:w-fit">
           <Upload className="h-4 w-4" />
           Upload Images
           <Sparkles className="h-3 w-3 ml-1 animate-pulse" />
