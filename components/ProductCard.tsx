@@ -15,23 +15,17 @@ export function ProductCard({
   hashtags,
   processedImages,
 }: product) {
-  console.log(_id);
   return (
     <Card className="group hover:shadow-lg transition-shadow duration-200">
       <CardContent className="p-4">
         <div className="aspect-square relative mb-4 rounded-lg overflow-hidden bg-gray-100">
-          {processedImages.map((src: string, index: number) => {
-            return (
-              <Image
-                key={index}
-                src={src}
-                alt={name}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-200"
-                sizes="{max-width: 768} 100vw, {max-width:1200px} 50vw, 35vw"
-              />
-            );
-          })}
+          <Image
+            src={processedImages[0]}
+            alt={name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-200"
+            sizes="{max-width: 768} 100vw, {max-width:1200px} 50vw, 35vw"
+          />
         </div>
         <div className="space-y-2">
           <h3 className="font-semibold text-lg line-clamp-2 text-gray-900">
