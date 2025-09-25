@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header';
+import NavButton from '@/components/NavButton';
 import { ProductCard } from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Wrapper } from '@/components/Wrapper';
@@ -31,13 +31,13 @@ export default async function dashboard() {
             </p>
           </div>
           <div className="self-center hidden sm:block">
-            <Button className="">
+            <NavButton link="/upload">
               <Plus />
               <span>Add Product</span>
-            </Button>
+            </NavButton>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {productData.map((product: product, index: number) => {
             return (
               <ProductCard
