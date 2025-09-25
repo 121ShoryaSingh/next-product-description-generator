@@ -32,11 +32,13 @@ export default function Preview() {
   return (
     <div className="min-h-screen pt-32">
       <Wrapper>
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
             <CardHeader>
-              <CardTitle>Product Image</CardTitle>
-              <CardDescription>Original uploaded image</CardDescription>
+              <CardTitle className="text-xl">Product Image</CardTitle>
+              <CardDescription className="text-lg">
+                Original uploaded image
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="relative aspect-square rounded-lg">
@@ -44,37 +46,69 @@ export default function Preview() {
                   src={cleanedImage || ''}
                   alt={aiData.newProduct.name}
                   fill
+                  className="object-contain"
                 />
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>{aiData.newProduct.name}</CardTitle>
+              <CardTitle className="text-xl">
+                {aiData.newProduct.name}
+              </CardTitle>
               <CardDescription>
                 <ShowMore text={aiData.newProduct.description} />
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <CardTitle>Caption</CardTitle>
-              <ul>
-                {aiData.newProduct.captions.map(
-                  (caption: string, index: number) => {
-                    return <li key={index}>{caption}</li>;
-                  }
-                )}
-              </ul>
+              <CardTitle>Captions:</CardTitle>
+              <CardDescription>
+                <ul className="grid grid-cols-1 gap-4 pt-3">
+                  {aiData.newProduct.captions.map(
+                    (caption: string, index: number) => {
+                      return (
+                        <li
+                          className="py-4 px-5 bg-gray-100 rounded-xl"
+                          key={index}
+                        >
+                          {caption}
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+              </CardDescription>
             </CardContent>
             <CardFooter>
-              <CardTitle>Hashtags</CardTitle>
-              <div>
-                {aiData.newProduct.hashtags.map(
-                  (hashtag: string, index: number) => {
-                    return <span key={index}>{hashtag}</span>;
-                  }
-                )}
+              <div className="flex flex-col gap-3">
+                <CardTitle>Hashtags:</CardTitle>
+                <div className="flex flex-wrap pt-3 bg-gray-100 py-4 px-5 rounded-xl gap-2">
+                  {aiData.newProduct.hashtags.map(
+                    (hashtag: string, index: number) => {
+                      return (
+                        <span
+                          className="text-blue-600"
+                          key={index}
+                        >
+                          {hashtag}
+                        </span>
+                      );
+                    }
+                  )}
+                </div>
               </div>
             </CardFooter>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Set Price for your Product</CardTitle>
+              <CardDescription>
+                Compare the product from vairous website across your region
+              </CardDescription>
+              <CardContent>
+                <Input type="number" />
+              </CardContent>
+            </CardHeader>
           </Card>
         </div>
       </Wrapper>
