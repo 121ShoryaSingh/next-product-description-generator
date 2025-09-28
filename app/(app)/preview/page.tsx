@@ -1,6 +1,7 @@
 'use client';
 
 import { ShowMore } from '@/components/ShowMoreText';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -31,7 +32,21 @@ export default function Preview() {
   );
   const aiData = useSelector((state: RootState) => state.app.aiData);
   if (!aiData) {
-    toast.error('Something is wrong');
+    return (
+      <div className=" min-h-screen flex items-center justify-center">
+        <div className="mx-auto flex items-center justify-center gap-8">
+          <div className="">No product data avaliable </div>
+          <Button
+            variant="outline"
+            onClick={() => {
+              router.push('/upload');
+            }}
+          >
+            Upload data
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   const handlePrice = (e: any) => {
@@ -93,7 +108,6 @@ export default function Preview() {
       toast.error('Error setting price of product');
     }
   };
-
   return (
     <div className="min-h-screen pt-32">
       <Wrapper>
@@ -188,6 +202,20 @@ export default function Preview() {
               </CardHeader>
             </Card>
           </div>
+        </div>
+        {/* Market Research */}
+        <div>
+          <Card>
+            <CardHeader>
+              <div>
+                <CardTitle>Similar Products Online</CardTitle>
+                <Badge>Market Research</Badge>
+              </div>
+              <CardDescription>
+                Compare your product with similar items available online
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </Wrapper>
     </div>
