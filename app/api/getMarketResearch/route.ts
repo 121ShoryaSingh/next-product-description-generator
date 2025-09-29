@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
-const SERPAPI_KEY = process.env.SERPAPI_KEY;
+const SERPAPI_KEY = process.env.SERPAPI_API_KEY;
 const SERPAPI_BASE_URL = 'https://serpapi.com/search.json';
 
 export async function GET(req: NextRequest) {
@@ -37,17 +37,22 @@ export async function GET(req: NextRequest) {
     const response = await axios.get(SERPAPI_BASE_URL, {
       params: seapApiParams,
     });
+
+    const { shopping_results } = response.data;
+
+    const ProductData = shopping_results.slice(0, 6);
+
     return NextResponse.json(
       {
         success: true,
-        data: response.data,
+        data: ProductData,
         message: 'Products fetched successfully',
         total_results: response.data.shopping_results?.length || 0,
       },
       { status: 200 }
     );
   } catch (error: any) {
-    console.error('SerpApi Error', error.message);
+    console.error('SerpApi Error', error);
     return NextResponse.json(
       {
         error: 'Failed to fetch products',
