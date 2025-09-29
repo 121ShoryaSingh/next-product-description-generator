@@ -1,5 +1,6 @@
 'use client';
 
+import MarketResearch from '@/components/MarketResearch';
 import { ShowMore } from '@/components/ShowMoreText';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -30,69 +31,69 @@ export default function Preview() {
   const cleanedImage = useSelector(
     (state: RootState) => state.app.cleanedImage
   );
-  const aiData = useSelector((state: RootState) => state.app.aiData);
-  if (!aiData) {
-    return (
-      <div className=" min-h-screen flex items-center justify-center">
-        <div className="mx-auto flex items-center justify-center gap-8">
-          <div className="">No product data avaliable </div>
-          <Button
-            variant="outline"
-            onClick={() => {
-              router.push('/upload');
-            }}
-          >
-            Upload data
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  // const aiData = useSelector((state: RootState) => state.app.aiData);
+  // if (!aiData) {
+  //   return (
+  //     <div className=" min-h-screen flex items-center justify-center">
+  //       <div className="mx-auto flex items-center justify-center gap-8">
+  //         <div className="">No product data avaliable </div>
+  //         <Button
+  //           variant="outline"
+  //           onClick={() => {
+  //             router.push('/upload');
+  //           }}
+  //         >
+  //           Upload data
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const handlePrice = (e: any) => {
     setPrice(e.target.value);
   };
 
-  // const aiData = {
-  //   message: 'Product generated & saved',
-  //   newProduct: {
-  //     baseDetails: 'Nikon Camera, D750, DSLR',
-  //     captions: [
-  //       'Capture the world in breathtaking detail with the Nikon D750.',
-  //       'The Nikon D750: Your gateway to professional-quality photography.',
-  //       'Elevate your visual storytelling with the versatile Nikon D750 DSLR.',
-  //     ],
-  //     createdAt: '2025-09-25T09:29:32.134Z',
-  //     description:
-  //       "Unleash your creative potential with the Nikon D750 DSLR camera. Designed for both aspiring and professional photographers, this full-frame powerhouse delivers exceptional image quality, stunning Full HD 1080p video capabilities, and unmatched versatility. Its 24.3MP CMOS sensor captures breathtaking detail and vibrant colors, while the advanced 51-point autofocus system ensures tack-sharp focus in any shooting situation. \n\nThe D750 excels in low-light conditions, thanks to its wide ISO range of 100-12800 (expandable to 50-51200), allowing you to capture clean, noise-free images even in challenging environments. Its robust construction and weather-sealed body make it ideal for outdoor adventures and demanding shoots. \n\nWhether you're shooting portraits, landscapes, or action-packed moments, the Nikon D750 provides the tools you need to bring your vision to life. Experience the difference a full-frame sensor and advanced features can make. Upgrade your photography gear today and see your images soar. This camera is perfect for photography enthusiasts, semi-professionals, and anyone seeking to elevate their visual storytelling. With easy sharing features and built in Wi-Fi, instantly share your creations with the world.",
-  //     hashtags: [
-  //       'NikonD750',
-  //       'DSLRCamera',
-  //       'FullFrameCamera',
-  //       'Photography',
-  //       'NikonPhotography',
-  //       'CameraGear',
-  //       'PhotoOfTheDay',
-  //       'Photographers',
-  //       'Camera',
-  //       'PhotographyLovers',
-  //       'DSLR',
-  //       'FullFrame',
-  //       'Nikon',
-  //       'ProfessionalPhotography',
-  //       'CreativePhotography',
-  //     ],
-  //     name: 'Nikon D750 DSLR Camera: Capture Stunning Photos & Videos',
-  //     price: 0,
-  //     processedImages: [
-  //       'https://pub-3cc03a744b15424c91b9057076a57e4e.r2.dev/product-fdcx7mmfz7op9v.68ba7e7aaeac521dba42ce98',
-  //     ],
-  //     updatedAt: '2025-09-25T09:29:32.134Z',
-  //     userId: '68ba7e7aaeac521dba42ce98',
+  const aiData = {
+    message: 'Product generated & saved',
+    newProduct: {
+      baseDetails: 'Nikon Camera, D750, DSLR',
+      captions: [
+        'Capture the world in breathtaking detail with the Nikon D750.',
+        'The Nikon D750: Your gateway to professional-quality photography.',
+        'Elevate your visual storytelling with the versatile Nikon D750 DSLR.',
+      ],
+      createdAt: '2025-09-25T09:29:32.134Z',
+      description:
+        "Unleash your creative potential with the Nikon D750 DSLR camera. Designed for both aspiring and professional photographers, this full-frame powerhouse delivers exceptional image quality, stunning Full HD 1080p video capabilities, and unmatched versatility. Its 24.3MP CMOS sensor captures breathtaking detail and vibrant colors, while the advanced 51-point autofocus system ensures tack-sharp focus in any shooting situation. \n\nThe D750 excels in low-light conditions, thanks to its wide ISO range of 100-12800 (expandable to 50-51200), allowing you to capture clean, noise-free images even in challenging environments. Its robust construction and weather-sealed body make it ideal for outdoor adventures and demanding shoots. \n\nWhether you're shooting portraits, landscapes, or action-packed moments, the Nikon D750 provides the tools you need to bring your vision to life. Experience the difference a full-frame sensor and advanced features can make. Upgrade your photography gear today and see your images soar. This camera is perfect for photography enthusiasts, semi-professionals, and anyone seeking to elevate their visual storytelling. With easy sharing features and built in Wi-Fi, instantly share your creations with the world.",
+      hashtags: [
+        'NikonD750',
+        'DSLRCamera',
+        'FullFrameCamera',
+        'Photography',
+        'NikonPhotography',
+        'CameraGear',
+        'PhotoOfTheDay',
+        'Photographers',
+        'Camera',
+        'PhotographyLovers',
+        'DSLR',
+        'FullFrame',
+        'Nikon',
+        'ProfessionalPhotography',
+        'CreativePhotography',
+      ],
+      name: 'Nikon D750 DSLR Camera: Capture Stunning Photos & Videos',
+      price: 0,
+      processedImages: [
+        'https://pub-3cc03a744b15424c91b9057076a57e4e.r2.dev/product-fdcx7mmfz7op9v.68ba7e7aaeac521dba42ce98',
+      ],
+      updatedAt: '2025-09-25T09:29:32.134Z',
+      userId: '68ba7e7aaeac521dba42ce98',
 
-  //     _id: '68d50b7c301c4d25aafa1e92',
-  //   },
-  // };
+      _id: '68d50b7c301c4d25aafa1e92',
+    },
+  };
 
   const handleSetPrice = async () => {
     try {
@@ -109,8 +110,8 @@ export default function Preview() {
     }
   };
   return (
-    <div className="min-h-screen pt-32">
-      <Wrapper>
+    <div className="min-h-screen pt-32 bg-gray-100">
+      <Wrapper className=" flex-col gap-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
             <CardHeader>
@@ -122,7 +123,9 @@ export default function Preview() {
             <CardContent>
               <div className="relative aspect-square rounded-lg">
                 <Image
-                  src={cleanedImage || ''}
+                  src={
+                    cleanedImage || '' || aiData.newProduct.processedImages[0]
+                  }
                   alt={aiData.newProduct.name}
                   fill
                   className="object-contain"
@@ -205,17 +208,7 @@ export default function Preview() {
         </div>
         {/* Market Research */}
         <div>
-          <Card>
-            <CardHeader>
-              <div>
-                <CardTitle>Similar Products Online</CardTitle>
-                <Badge>Market Research</Badge>
-              </div>
-              <CardDescription>
-                Compare your product with similar items available online
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <MarketResearch name={aiData.newProduct.name} />
         </div>
       </Wrapper>
     </div>
