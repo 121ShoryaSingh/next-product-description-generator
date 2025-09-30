@@ -3,10 +3,6 @@
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
-interface GlobalErrorHandlerProps {
-  error: string | null;
-}
-
 export default function ErrorComponent({ error }: { error: string }) {
   useEffect(() => {
     toast.error('Failed to fetch products');
