@@ -22,7 +22,7 @@ export default async function dashboard() {
     });
     productData = response.data.message;
   } catch (error: any) {
-    errorMessage = 'Failed to fetch the products';
+    errorMessage = error.message || 'Failed to fetch the products';
   }
 
   if (errorMessage) {
