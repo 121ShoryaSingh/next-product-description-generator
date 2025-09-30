@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { setSession } from '@/redux/features/session/sessionSlice';
 import { useDispatch } from 'react-redux';
 import { Package } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function login() {
   const router = useRouter();
@@ -40,7 +41,6 @@ export default function login() {
               new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
           })
         );
-        console.log('control reached here');
         router.push('/dashboard');
       }
     } catch (error: any) {
@@ -53,6 +53,7 @@ export default function login() {
       } else {
         setError('Server error please try again');
         setErrorStatus(500);
+        toast.error('something went wrong');
       }
     } finally {
       setIsLoading(false);

@@ -1,6 +1,5 @@
 import NavButton from '@/components/NavButton';
 import { ProductCard } from '@/components/ProductCard';
-import { Button } from '@/components/ui/button';
 import { Wrapper } from '@/components/Wrapper';
 import { product } from '@/types/types';
 import axios from 'axios';
@@ -21,7 +20,7 @@ export default async function dashboard() {
     productData = response.data.message;
   } catch (error) {}
   return (
-    <div className="pt-8 bg-gray-200">
+    <div className="pt-8 min-h-screen bg-gray-200">
       <Wrapper className="pt-16 flex-col">
         <div className="flex justify-between pb-7">
           <div className="sm:self-center self-start">

@@ -49,7 +49,6 @@ export default function MarketResearch({ name }: { name: string }) {
     }
     MarketData();
   }, [name]);
-  console.log(productData);
   return (
     <div>
       <Card>
@@ -65,19 +64,19 @@ export default function MarketResearch({ name }: { name: string }) {
           </CardHeader>
           <CardContent>
             {loading && (
-              <div>
+              <div className="flex justify-center items-center">
                 <p>Loading....</p>
               </div>
             )}
 
             {error && (
-              <div>
-                <p>{error}</p>
+              <div className="flex justify-center items-center">
+                <p>Something went wrong</p>
               </div>
             )}
 
             {!loading && !error && productData.length === 0 && (
-              <div>
+              <div className="flex justify-center items-center">
                 <p>No similar product found</p>
               </div>
             )}
