@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
       );
     }
   } catch (error) {
+    console.error('Failed to verify session', error);
     return NextResponse.json({ message: 'Invalid token' }, { status: 400 });
   }
 }

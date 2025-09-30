@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { removeBackground } from '@imgly/background-removal';
+
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -66,6 +66,7 @@ export default function Upload() {
     setLoading(true);
     setPreview(URL.createObjectURL(file));
     try {
+      const { removeBackground } = await import('@imgly/background-removal');
       const blob = await removeBackground(file, {
         output: {
           format: 'image/png',

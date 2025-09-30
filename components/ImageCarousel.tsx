@@ -6,10 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
 import { DownloadIcon } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from './ui/button';
 
 export default function ImageCarousel({ images }: { images: string[] }) {
   console.log(images);

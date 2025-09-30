@@ -1,3 +1,4 @@
+import { productTypes } from '@/types/types';
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -42,7 +43,7 @@ export async function GET(req: NextRequest) {
 
     const ProductData = shopping_results.slice(0, 6);
 
-    const mappedProducts = ProductData.map((product: any) => {
+    const mappedProducts = ProductData.map((product: productTypes) => {
       const searchUrl = `https://www.google.co.in/search?tbm=shop&q=${encodeURIComponent(
         product.title
       )}&gl=in&hl=en`;
@@ -68,7 +69,7 @@ export async function GET(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error('SerpApi Error', error);
     return NextResponse.json(
       {

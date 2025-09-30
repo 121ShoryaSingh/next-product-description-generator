@@ -108,10 +108,11 @@ export default function MarketResearch({ name }: { name: string }) {
                           </div>
                         </CardContent>
                         <CardFooter>
-                          <CardDescription className="w-full mt-4">
+                          <CardDescription className="w-full mt-12">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                 <div className="aspect-square relative">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
                                   <img
                                     src={
                                       product.source_icon || '/default-icon.png'

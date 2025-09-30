@@ -9,3 +9,14 @@ export interface product {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface productTypes {
+  product_id: string;
+  title: string;
+  product_link: string;
+  source: string;
+  source_icon: string;
+  price: string;
+  rating: number;
+  thumbnail: string;
+}

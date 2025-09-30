@@ -4,7 +4,7 @@ import { dbConnect } from '@/lib/mongoDb';
 import { uploadToR2 } from '@/lib/r2';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, Schema, SchemaType } from '@google/generative-ai';
 import { GoogleAIFileManager } from '@google/generative-ai/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     // Extracting form data.
     const formData = await req.formData();
-    const product = formData.get('product' as string);
+    const product = formData.get('product') as string;
     const file = formData.get('image') as File;
     if (!file) {
       return NextResponse.json({ error: 'Missing image' }, { status: 400 });
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     // Converting file into buffer
     const arrayBuffer = await file.arrayBuffer();
-    const blob = Buffer.from(arrayBuffer);
+    const buffer = Buffer.from(arrayBuffer);
 
     // Sending the content gemini Api
     const apiKey = process.env.GOOGLE_API_KEY;
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     const fileManager = new GoogleAIFileManager(apiKey!);
-    const uploadResult = await fileManager.uploadFile(blob, {
+    const uploadResult = await fileManager.uploadFile(buffer, {
       displayName: 'upload-image',
       mimeType: file.type,
     });
@@ -93,39 +93,48 @@ export async function POST(req: NextRequest) {
       },
     ];
 
+    const responseSchema: Schema = {
+      type: SchemaType.OBJECT,
+      properties: {
+        title: {
+          type: SchemaType.STRING,
+          description: 'SEO-optimized product title',
+        },
+        description: {
+          type: SchemaType.STRING,
+          description: 'Detailed product description',
+        },
+        captions: {
+          type: SchemaType.ARRAY,
+          items: { type: SchemaType.STRING },
+          description: 'Social media captions',
+        },
+        hashtags: {
+          type: SchemaType.ARRAY,
+          items: { type: SchemaType.STRING },
+          description: 'SEO hashtags',
+        },
+      },
+      required: ['title', 'description', 'captions', 'hashtags'],
+    };
+
     const result = await model.generateContent({
       contents,
       generationConfig: {
         responseMimeType: 'application/json',
-        responseSchema: {
-          type: 'OBJECT',
-          properties: {
-            title: { type: 'STRING' },
-            description: { type: 'STRING' },
-            captions: {
-              type: 'ARRAY',
-              items: { type: 'STRING' },
-            },
-            hashtags: {
-              type: 'ARRAY',
-              items: { type: 'STRING' },
-            },
-          },
-          required: ['title', 'description', 'captions', 'hashtags'],
-        },
+        responseSchema: responseSchema,
       },
-    } as any);
+    });
 
     const text = result.response!.text();
-    let parsedOutput;
     // Storing the image in to R2 storage
     const r2Url = await uploadToR2({
-      body: blob,
+      body: buffer,
       key: generateFileName(decode.id),
       contentType: file.type,
     });
     console.log(r2Url);
-    parsedOutput = JSON.parse(text);
+    const parsedOutput = JSON.parse(text);
 
     // // Storing the image and product detail to backend
     const newProduct = await Product.create({
