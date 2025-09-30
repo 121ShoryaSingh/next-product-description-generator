@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import { Button } from './ui/button';
+import { handleError } from '@/lib/handleError';
 interface productTypes {
   id: string;
   title: string;
@@ -40,8 +41,9 @@ export default function MarketResearch({ name }: { name: string }) {
         } else {
           setProductData([]);
         }
-      } catch (error: any) {
-        setError(error);
+      } catch (error: unknown) {
+        const errorMessage = handleError(error);
+        setError(errorMessage);
         toast.error('Failed to fetch Market Research data');
       } finally {
         setLoading(false);
@@ -71,13 +73,13 @@ export default function MarketResearch({ name }: { name: string }) {
 
             {error && (
               <div className="flex justify-center items-center">
-                <p>Something went wrong</p>
+                <p>Something went wrong.</p>
               </div>
             )}
 
             {!loading && !error && productData.length === 0 && (
               <div className="flex justify-center items-center">
-                <p>No similar product found</p>
+                <p>No similar product found.</p>
               </div>
             )}
             {!loading && productData.length > 0 && (
