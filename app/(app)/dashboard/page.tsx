@@ -3,7 +3,7 @@ import NavButton from '@/components/NavButton';
 import { ProductCard } from '@/components/ProductCard';
 import { Wrapper } from '@/components/Wrapper';
 import { product } from '@/types/types';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { Plus } from 'lucide-react';
 import { cookies } from 'next/headers';
 

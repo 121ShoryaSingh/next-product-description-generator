@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { signUpSchema } from '@/schema/signUpSchema';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { Package } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -30,17 +30,23 @@ export default function Register() {
       setErrorStatus(0);
       setError('');
       const response = await axios.post('/api/register', user);
+      if (response.status === 500) {
+        throw new Error('Something went worng, Please try again');
+      }
       router.push('/login');
-    } catch (error: any) {
-      if (error.response?.status === 400) {
-        setErrorStatus(400);
-        setError('User already exists');
-      } else if (error.response?.status === 500) {
-        setErrorStatus(500);
-        setError('Server error. Please try again later');
-      } else {
-        setErrorStatus(500);
-        setError('Something went wrong. Please try again');
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 400) {
+          setErrorStatus(400);
+          setError('User already exists');
+        } else if (status === 500) {
+          setErrorStatus(500);
+          setError('Server error. Please try again later');
+        } else {
+          setErrorStatus(500);
+          setError('Something went wrong. Please try again');
+        }
       }
     } finally {
       setIsLoading(false);

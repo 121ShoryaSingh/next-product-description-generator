@@ -2,7 +2,6 @@
 
 import MarketResearch from '@/components/MarketResearch';
 import { ShowMore } from '@/components/ShowMoreText';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -14,6 +13,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Wrapper } from '@/components/Wrapper';
+import { handleError } from '@/lib/handleError';
 import { RootState } from '@/redux/store';
 import axios from 'axios';
 import { TagIcon } from 'lucide-react';
@@ -27,6 +27,7 @@ export default function Preview() {
   const router = useRouter();
 
   const [price, setPrice] = useState(0);
+  const [error, setError] = useState('');
 
   const cleanedImage = useSelector(
     (state: RootState) => state.app.cleanedImage
@@ -50,8 +51,9 @@ export default function Preview() {
     );
   }
 
-  const handlePrice = (e: any) => {
-    setPrice(e.target.value);
+  const handlePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setPrice(Number(e.target.value));
     router.push('/dashboard');
   };
 
@@ -61,12 +63,21 @@ export default function Preview() {
         id: aiData.newProduct._id,
         price: Number(price),
       });
-      const data = response.data;
       if (response.status === 200) {
         toast.success('Price changed successfully');
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage = handleError(error);
+      setError(errorMessage);
       toast.error('Error setting price of product');
+    }
+
+    if (error) {
+      return (
+        <div className="min-h-full min-w-screen flex justify-center items-center">
+          <p>{error}</p>
+        </div>
+      );
     }
   };
   return (

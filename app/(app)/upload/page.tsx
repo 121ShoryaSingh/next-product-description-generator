@@ -20,6 +20,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import Image from 'next/image';
+import { product } from '@/types/types';
 
 interface ProductData {
   details: string;
@@ -52,13 +54,13 @@ export default function Upload() {
     dispatch(setCleanedImage(imageUrl));
   };
 
-  const handleSetAiData = (data: any) => {
+  const handleSetAiData = (data: product) => {
     console.log(data);
     dispatch(setAiData(data));
     return true;
   };
 
-  const onFile = async (e: any) => {
+  const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setLoading(true);
@@ -118,11 +120,14 @@ export default function Upload() {
                     <p className="text-sm text-gray-600">Processing…</p>
                   )}
                   {preview && (
-                    <img
-                      src={preview}
-                      alt="preview"
-                      className="w-full max-h-96 object-contain rounded border"
-                    />
+                    <div className="aspect-square relative">
+                      <Image
+                        src={preview}
+                        alt="preview"
+                        className="object-contain rounded border"
+                        fill
+                      />
+                    </div>
                   )}
                 </div>
               </CardContent>
