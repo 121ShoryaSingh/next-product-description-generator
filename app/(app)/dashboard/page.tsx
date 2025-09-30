@@ -3,7 +3,7 @@ import NavButton from '@/components/NavButton';
 import { ProductCard } from '@/components/ProductCard';
 import { Wrapper } from '@/components/Wrapper';
 import { product } from '@/types/types';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Plus } from 'lucide-react';
 import { cookies } from 'next/headers';
 
@@ -21,8 +21,14 @@ export default async function dashboard() {
       },
     });
     productData = response.data.message;
-  } catch (error: any) {
-    errorMessage = error.message || 'Failed to fetch the products';
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    } else {
+      errorMessage = 'An unexpected error occurred';
+    }
   }
 
   if (errorMessage) {
