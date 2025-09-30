@@ -23,29 +23,46 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const seapApiParams = {
+    const serpApiParams = {
       engine: 'google_shopping',
       api_key: SERPAPI_KEY,
       q: query,
       location: 'India',
       gl: 'in',
-      h1: 'en',
+      hl: 'en',
       google_domain: 'google.co.in',
       output: 'json',
     };
 
     const response = await axios.get(SERPAPI_BASE_URL, {
-      params: seapApiParams,
+      params: serpApiParams,
     });
 
     const { shopping_results } = response.data;
 
     const ProductData = shopping_results.slice(0, 6);
 
+    const mappedProducts = ProductData.map((product: any) => {
+      const searchUrl = `https://www.google.co.in/search?tbm=shop&q=${encodeURIComponent(
+        product.title
+      )}&gl=in&hl=en`;
+
+      return {
+        id: product.product_id,
+        title: product.title,
+        product_link: searchUrl,
+        source: product.source,
+        source_icon: product.source_icon,
+        price: product.price,
+        rating: product.rating,
+        thumbnail: product.thumbnail,
+      };
+    });
+
     return NextResponse.json(
       {
         success: true,
-        data: ProductData,
+        data: mappedProducts,
         message: 'Products fetched successfully',
         total_results: response.data.shopping_results?.length || 0,
       },
