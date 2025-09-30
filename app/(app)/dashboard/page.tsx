@@ -1,3 +1,4 @@
+import ErrorComponent from '@/components/ErrorComponent';
 import NavButton from '@/components/NavButton';
 import { ProductCard } from '@/components/ProductCard';
 import { Wrapper } from '@/components/Wrapper';
@@ -8,7 +9,9 @@ import { cookies } from 'next/headers';
 
 export default async function dashboard() {
   let productData: product[] = [];
+  let errorMessage: string = '';
   try {
+    errorMessage = '';
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
     const response = await axios.get('http://localhost:3000/api/getProduct', {
@@ -18,7 +21,13 @@ export default async function dashboard() {
       },
     });
     productData = response.data.message;
-  } catch (error) {}
+  } catch (error: any) {
+    errorMessage = 'Failed to fetch the products';
+  }
+
+  if (errorMessage) {
+    return <ErrorComponent error={errorMessage} />;
+  }
   return (
     <div className="pt-8 min-h-screen bg-gray-200">
       <Wrapper className="pt-16 flex-col">
