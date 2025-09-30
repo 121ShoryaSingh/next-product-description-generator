@@ -12,9 +12,11 @@ import {
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Image from 'next/image';
+import { Button } from './ui/button';
 interface productTypes {
+  id: string;
   title: string;
-  productLink: string;
+  product_link: string;
   source: string;
   source_icon: string;
   price: string;
@@ -100,7 +102,7 @@ export default function MarketResearch({ name }: { name: string }) {
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <div className="flex flex-col gap-4">
+                          <div className="flex flex-col gap-4 h-8">
                             <CardTitle>{product.title}</CardTitle>
                           </div>
                         </CardContent>
@@ -119,10 +121,18 @@ export default function MarketResearch({ name }: { name: string }) {
                                 </div>
                                 <span>{product.source}</span>
                               </div>
-                              <p>
+                              <p className="text-black">
                                 <strong>{product.price}</strong>
                               </p>
                             </div>
+                            <a
+                              href={product.product_link}
+                              target="0"
+                            >
+                              <Button className="mt-2 w-full cursor-pointer">
+                                View Button
+                              </Button>
+                            </a>
                           </CardDescription>
                         </CardFooter>
                       </div>
