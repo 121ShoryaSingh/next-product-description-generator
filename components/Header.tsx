@@ -41,7 +41,7 @@ export function Header() {
           {/* Logo */}
           <Link
             className="flex items-center space-x-2"
-            href="/dashboard"
+            href="/"
           >
             <Package className="h-8 w-8 text-blue-600" />
             <span className="text-xl font-bold text-gray-900">ProductAI</span>
@@ -74,10 +74,7 @@ export function Header() {
               {session.status === 'authenticated' ? (
                 <>
                   <span className="flex text-sm text-gray-700">
-                    Welcome,{' '}
-                    {session.data?.user
-                      ? session.data?.user.name
-                      : 'Loading...'}
+                    Welcome, {session.data?.user ? userName : 'Loading...'}
                   </span>
                   <Button onClick={handleLogOut}>Logout</Button>
                 </>
