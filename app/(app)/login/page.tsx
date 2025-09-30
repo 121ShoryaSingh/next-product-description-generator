@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { signInSchema } from '@/schema/signInSchema';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { setSession } from '@/redux/features/session/sessionSlice';
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Package } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function login() {
+export default function Login() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [user, setUser] = useState<signInSchema>({
@@ -43,17 +43,31 @@ export default function login() {
         );
         router.push('/dashboard');
       }
-    } catch (error: any) {
-      if (error.response.status === 401) {
-        setError('Enter the correct email');
-        setErrorStatus(401);
-      } else if (error.response.status === 400) {
-        setError('Enter the correct password');
-        setErrorStatus(400);
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        const status = error.response?.status;
+
+        if (status === 401) {
+          setError('Enter the correct email');
+          setErrorStatus(401);
+        } else if (status === 400) {
+          setError('Enter the correct password');
+          setErrorStatus(400);
+        } else {
+          setError('Server error please try again');
+          setErrorStatus(500);
+          toast.error('Something went wrong');
+        }
+      } else if (error instanceof Error) {
+        // Handle regular JavaScript errors
+        setError(error.message);
+        setErrorStatus(0);
+        toast.error('Something went wrong');
       } else {
-        setError('Server error please try again');
-        setErrorStatus(500);
-        toast.error('something went wrong');
+        // Handle unknown error types
+        setError('An unexpected error occurred');
+        setErrorStatus(0);
+        toast.error('Something went wrong');
       }
     } finally {
       setIsLoading(false);
@@ -84,7 +98,7 @@ export default function login() {
               <label htmlFor="email">Email</label>
               <Input
                 id="email"
-                type="text"
+                type="email"
                 placeholder="Email"
                 className={
                   errorStatus === 401
