@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
