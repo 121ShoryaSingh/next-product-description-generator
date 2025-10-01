@@ -14,12 +14,15 @@ export default async function dashboard() {
     errorMessage = '';
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
-    const response = await axios.get('http://localhost:3000/api/getProduct', {
-      headers: {
-        'Content-Type': 'application/json',
-        Cookie: token ? `token=${token}` : '',
-      },
-    });
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getProduct`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: token ? `token=${token}` : '',
+        },
+      }
+    );
     productData = response.data.message;
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -23,7 +23,7 @@ import Link from 'next/link';
 
 // app/products/[slug]/page.tsx
 const API_BASE_URL =
-  process.env.NEXTAUTH_URL || process.env.BASE_URL || 'http://localhost:3000';
+  process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 export default async function ProductPage({
   params,
