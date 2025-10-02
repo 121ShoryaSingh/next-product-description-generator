@@ -33,7 +33,7 @@ export function ProductCard({
           </h3>
           <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
           <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-blue-600">${price}</span>
+            <span className="text-lg font-bold text-blue-600">₹{price}</span>
             <span className="text-xs text-gray-500">{caption}</span>
           </div>
         </div>
