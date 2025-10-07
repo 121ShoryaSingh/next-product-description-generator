@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyToken } from './lib/auth';
-import axios from 'axios';
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value;
@@ -22,10 +20,15 @@ export async function middleware(req: NextRequest) {
     const response = await fetch(`${req.nextUrl.origin}/api/session`, {
       method: 'GET',
       headers: {
-        Cookie: req.headers.get('cookie') || '', // Forward cookies
+        Cookie: req.headers.get('cookie') || '', 
         'Content-Type': 'application/json',
       },
     });
+    if(!response.ok) {
+      const redirectResponse = NextResponse.redirect(new URL('login', req.url))
+      redirectResponse.cookies.delete('token')
+      return redirectResponse
+    }
     return NextResponse.next();
   } catch {
     const response = NextResponse.redirect(new URL('/login', req.url));

@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function PATCH(req: NextRequest) {
   try {
     await dbConnect();
-    console.log(req);
     const body = await req.json();
     const { id, price } = body;
 
@@ -15,7 +14,6 @@ export async function PATCH(req: NextRequest) {
         { status: 400 }
       );
     }
-    console.log('control reached here');
     const setPrice = await Product.findByIdAndUpdate(id, {
       $set: {
         price: price,

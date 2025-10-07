@@ -14,16 +14,8 @@ import { toast } from 'sonner';
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { handleError } from '@/lib/handleError';
-interface productTypes {
-  id: string;
-  title: string;
-  product_link: string;
-  source: string;
-  source_icon: string;
-  price: string;
-  rating: number;
-  thumbnail: string;
-}
+import { productTypes } from '@/types/types';
+
 
 export default function MarketResearch({ name }: { name: string }) {
   const [productData, setProductData] = useState<productTypes[]>([]);

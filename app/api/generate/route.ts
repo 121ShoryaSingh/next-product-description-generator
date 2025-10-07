@@ -133,7 +133,6 @@ export async function POST(req: NextRequest) {
       key: generateFileName(decode.id),
       contentType: file.type,
     });
-    console.log(r2Url);
     const parsedOutput = JSON.parse(text);
 
     // // Storing the image and product detail to backend
