@@ -9,6 +9,7 @@ import { setSession } from '@/redux/features/session/sessionSlice';
 import { useDispatch } from 'react-redux';
 import { Package } from 'lucide-react';
 import { toast } from 'sonner';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function Login() {
   const router = useRouter();
@@ -41,6 +42,7 @@ export default function Login() {
               new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
           })
         );
+        router.refresh();
         router.push('/dashboard');
       }
     } catch (error: unknown) {
@@ -76,7 +78,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50">
-      <div className="max-w-md mx-auto pt-32">
+      <div className="max-w-md mx-auto pt-16">
         <form
           className="bg-white flex flex-col gap-5 px-8 rounded-2xl py-8"
           onSubmit={handleSubmit}
@@ -138,7 +140,7 @@ export default function Login() {
               router.push('/dashboard');
             }}
           >
-            Login
+            {isLoading ? <Spinner /> : 'Login'}
           </Button>
           <p>
             New to the platform?{' '}
