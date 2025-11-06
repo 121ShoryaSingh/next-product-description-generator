@@ -99,72 +99,75 @@ export default function Upload() {
     }
   };
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Wrapper className="pt-32 flex-col">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card>
-            <div className="space-y-8">
-              <CardHeader>
-                <CardTitle>Upload & Clean Background</CardTitle>
-                <CardDescription>
-                  Upload high-quality image of your product
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="border-3 border-dashed border-blue-500  rounded-xl p-6">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={onFile}
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-100">
+        <Wrapper className="pt-32 flex-col">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card>
+              <div className="space-y-8">
+                <CardHeader>
+                  <CardTitle>Upload & Clean Background</CardTitle>
+                  <CardDescription>
+                    Upload high-quality image of your product
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="border-3 border-dashed border-blue-500  rounded-xl p-6">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={onFile}
+                    />
+                    {loading && (
+                      <p className="text-sm text-gray-600">Processing…</p>
+                    )}
+                    {preview && (
+                      <div className="aspect-square relative">
+                        <Image
+                          src={preview}
+                          alt="preview"
+                          className="object-contain rounded border"
+                          fill
+                        />
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </div>
+            </Card>
+            <Card>
+              <div className="space-y-8">
+                <CardHeader>
+                  <CardTitle>Basic Details</CardTitle>
+                  <CardDescription>
+                    Enter basic information related to your product
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Textarea
+                    className="w-full rounded border p-3 outline-none focus:ring-2 focus:ring-blue-500"
+                    rows={4}
+                    placeholder='e.g. "red cotton shirt, men’s, size M"'
+                    value={product.details}
+                    onChange={(e) =>
+                      setProduct({ ...product, details: e.target.value })
+                    }
                   />
-                  {loading && (
-                    <p className="text-sm text-gray-600">Processing…</p>
-                  )}
-                  {preview && (
-                    <div className="aspect-square relative">
-                      <Image
-                        src={preview}
-                        alt="preview"
-                        className="object-contain rounded border"
-                        fill
-                      />
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </div>
-          </Card>
-          <Card>
-            <div className="space-y-8">
-              <CardHeader>
-                <CardTitle>Basic Details</CardTitle>
-                <CardDescription>
-                  Enter basic information related to your product
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  className="w-full rounded border p-3 outline-none focus:ring-2 focus:ring-blue-500"
-                  rows={4}
-                  placeholder='e.g. "red cotton shirt, men’s, size M"'
-                  value={product.details}
-                  onChange={(e) =>
-                    setProduct({ ...product, details: e.target.value })
-                  }
-                />
-              </CardContent>
-              <CardFooter>
-                <Button
-                  onClick={handleSubmit}
-                  className="w-full"
-                >
-                  Next
-                </Button>
-              </CardFooter>
-            </div>
-          </Card>
-        </div>
-      </Wrapper>
-    </div>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    onClick={handleSubmit}
+                    className="w-full"
+                  >
+                    Next
+                  </Button>
+                </CardFooter>
+              </div>
+            </Card>
+          </div>
+        </Wrapper>
+      </div>
+    </>
   );
 }
