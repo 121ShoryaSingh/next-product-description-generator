@@ -26,6 +26,7 @@ export default function Login() {
     (field: keyof signInSchema) => (e: React.ChangeEvent<HTMLInputElement>) => {
       setUser((prev) => ({ ...prev, [field]: e.target.value }));
     };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -33,17 +34,17 @@ export default function Login() {
       setError('');
       setErrorStatus(0);
       const response = await axios.post('/api/login', user);
-      if (response) {
+      if (response.status === 200) {
         dispatch(
           setSession({
             user: response.data.user,
             expires:
               response.data.expires ||
               new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-          })
+          }),
+          router.refresh(),
+          router.push('/dashboard')
         );
-        router.refresh();
-        router.push('/dashboard');
       }
     } catch (error: unknown) {
       if (isAxiosError(error)) {
