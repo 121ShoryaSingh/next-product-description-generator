@@ -21,7 +21,10 @@ export async function POST(req: NextRequest) {
       );
     }
     const token = signToken({ id: user._id.toString(), email });
-    const response = NextResponse.json({ message: 'Logged In' });
+    const response = NextResponse.json(
+      { message: 'Logged In' },
+      { status: 200 }
+    );
     response.cookies.set('token', token, {
       httpOnly: true,
       path: '/',
