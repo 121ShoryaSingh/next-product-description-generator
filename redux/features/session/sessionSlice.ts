@@ -34,7 +34,8 @@ export const fetchSession = createAsyncThunk(
         withCredentials: true,
       });
       return response.data;
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       return rejectWithValue('Failed to fetch session');
     }
   }
