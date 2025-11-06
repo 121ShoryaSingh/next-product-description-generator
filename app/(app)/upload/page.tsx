@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import { product } from '@/types/types';
+import { Header } from '@/components/Header';
 
 interface ProductData {
   details: string;
