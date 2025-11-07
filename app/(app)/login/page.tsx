@@ -34,17 +34,19 @@ export default function Login() {
       setError('');
       setErrorStatus(0);
       const response = await axios.post('/api/login', user);
+
       if (response.status === 200) {
-        dispatch(
-          setSession({
-            user: response.data.user,
-            expires:
-              response.data.expires ||
-              new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-          }),
-          router.refresh(),
-          router.push('/dashboard')
-        );
+        const res = await axios.get('/api/session');
+        if (res.status === 200) {
+          dispatch(
+            setSession({
+              user: res.data.user,
+              expires: res.data.expires,
+            }),
+            router.refresh(),
+            router.push('/dashboard')
+          );
+        }
       }
     } catch (error: unknown) {
       if (isAxiosError(error)) {
