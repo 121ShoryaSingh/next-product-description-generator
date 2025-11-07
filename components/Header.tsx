@@ -14,6 +14,7 @@ const PageData = [
 ];
 
 export function Header() {
+  const session = useSession();
   const router = useRouter();
   const { status, signOut } = useSession();
   const pathname = usePathname();
@@ -73,7 +74,7 @@ export function Header() {
               {status === 'authenticated' ? (
                 <>
                   <span className="flex text-sm text-gray-700">
-                    Welcome, User
+                    Welcome, {session.data?.user.name}
                   </span>
                   <Button onClick={handleLogOut}>Logout</Button>
                 </>
