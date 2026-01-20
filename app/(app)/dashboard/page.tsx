@@ -7,54 +7,21 @@ import { product } from '@/types/types';
 import axios from 'axios';
 import { Plus } from 'lucide-react';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-
-interface DecodedToken extends JwtPayload {
-  userId: string;
-  email: string;
-  name: string;
-}
-
-async function getSession() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
-
-  if (!token) {
-    return null;
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodedToken;
-    return {
-      user: {
-        id: decoded.userId,
-        email: decoded.email,
-        name: decoded.name,
-      },
-      expires: decoded.exp
-        ? new Date(decoded.exp * 1000).toISOString()
-        : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    };
-  } catch {
-    return null;
-  }
-}
 
 export default async function dashboard() {
-  const session = await getSession();
-
-  if (!session) {
-    redirect('/login');
-  }
   let productData: product[] = [];
   let errorMessage: string = '';
   try {
     errorMessage = '';
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/getProduct`,
       {
-        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
+        },
       },
     );
     productData = response.data.message;

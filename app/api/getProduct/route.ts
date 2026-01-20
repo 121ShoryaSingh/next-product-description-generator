@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     //Db connect
-    const token = req.cookies.get('token')?.value;
+    const token = req.headers.get('Authorization');
     if (!token || token.length === 0) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     console.error('Error fetching data', error);
     return NextResponse.json(
       { message: 'Something went wrong error fetching data' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -5,15 +5,15 @@ import { signInSchema } from '@/schema/signInSchema';
 import axios, { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { setSession } from '@/redux/features/session/sessionSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/redux/hook';
 import { Package } from 'lucide-react';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
+import { setSession } from '@/redux/features/session/sessionSlice';
 
 export default function Login() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [user, setUser] = useState<signInSchema>({
     email: '',
     password: '',
@@ -37,9 +37,17 @@ export default function Login() {
       const response = await axios.post('/api/login', user, {
         withCredentials: true,
       });
-      console.log('✅ Login successful:', response.status);
+      if (response.status === 200) {
+        dispatch(
+          setSession({
+            user: response.data.user,
+            expires: response.data.expires,
+          }),
+        );
 
-      router.push('/dashboard');
+        toast.success('Login successful!');
+        router.push('/dashboard');
+      }
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         const status = error.response?.status;
