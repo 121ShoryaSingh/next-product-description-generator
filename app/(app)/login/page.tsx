@@ -38,16 +38,15 @@ export default function Login() {
       });
 
       if (response.status === 200) {
-        const res = await axios.get('/api/session');
+        const res = await axios.get('/api/session', { withCredentials: true });
         if (res.status === 200) {
           dispatch(
             setSession({
               user: res.data.user,
               expires: res.data.expires,
             }),
-            router.refresh(),
-            router.push('/dashboard'),
           );
+          router.push('/dashboard');
         }
       }
     } catch (error: unknown) {
