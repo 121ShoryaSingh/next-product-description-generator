@@ -33,7 +33,9 @@ export default function Login() {
       setIsLoading(true);
       setError('');
       setErrorStatus(0);
-      const response = await axios.post('/api/login', user);
+      const response = await axios.post('/api/login', user, {
+        withCredentials: true,
+      });
 
       if (response.status === 200) {
         const res = await axios.get('/api/session');
@@ -44,7 +46,7 @@ export default function Login() {
               expires: res.data.expires,
             }),
             router.refresh(),
-            router.push('/dashboard')
+            router.push('/dashboard'),
           );
         }
       }
@@ -139,9 +141,6 @@ export default function Login() {
           <Button
             type="submit"
             disabled={isLoading}
-            onClick={() => {
-              router.push('/dashboard');
-            }}
           >
             {isLoading ? <Spinner /> : 'Login'}
           </Button>
