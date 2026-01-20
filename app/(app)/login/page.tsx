@@ -46,7 +46,7 @@ export default function Login() {
         );
 
         toast.success('Login successful!');
-        router.push('/dashboard');
+        window.location.href = '/dashboard';
       }
     } catch (error: unknown) {
       if (isAxiosError(error)) {
