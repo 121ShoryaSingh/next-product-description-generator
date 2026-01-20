@@ -33,22 +33,13 @@ export default function Login() {
       setIsLoading(true);
       setError('');
       setErrorStatus(0);
+
       const response = await axios.post('/api/login', user, {
         withCredentials: true,
       });
+      console.log('✅ Login successful:', response.status);
 
-      if (response.status === 200) {
-        const res = await axios.get('/api/session', { withCredentials: true });
-        if (res.status === 200) {
-          dispatch(
-            setSession({
-              user: res.data.user,
-              expires: res.data.expires,
-            }),
-          );
-          router.push('/dashboard');
-        }
-      }
+      router.push('/dashboard');
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         const status = error.response?.status;
